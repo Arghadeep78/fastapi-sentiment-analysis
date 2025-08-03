@@ -1,1 +1,98 @@
-# fastapi-sentiment-analysis
+# 🧠 FastAPI Sentiment Analysis Web App
+
+This project is a full-stack **Sentiment Analysis** app using:
+
+- 🤖 RoBERTa Transformer (Hugging Face)
+- 🌲 Random Forest classifier
+- 💬 VADER Sentiment Analyzer
+- ⚡ FastAPI backend
+- 🌐 HTML/CSS frontend
+
+---
+
+## 📁 Project Structure
+
+```bash
+.
+├── __pycache__/
+├── models/
+│   ├── roberta_model/           # RoBERTa tokenizer & model files
+│   ├── scaler.pkl               # StandardScaler used with Random Forest
+│   └── sentiment_model.pkl      # Trained Random Forest model
+├── static/
+│   └── style.css                # CSS for frontend
+├── templates/
+│   └── index.html               # HTML template rendered by FastAPI
+├── train.csv                    # Sample training data
+├── model.ipynb                  # Jupyter Notebook for model training
+├── app.py                       # Main FastAPI app
+├── utils.py                     # Helper functions
+├── setup.py                     # Optional setup file
+└── requirements.txt             # Python dependencies
+└── README.md                    # User Guide
+
+```
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/your-username/your-repo-name.git
+cd your-repo-name
+```
+
+### 2. Create Virtual Environment (Recommended)
+
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+### 3. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## ▶️ Run the App
+
+```bash
+uvicorn app:app --reload
+```
+
+Visit: [http://127.0.0.1:8000](http://127.0.0.1:8000)
+
+---
+
+## 💡 Features
+
+- Predict sentiment using **RoBERTa**
+- Compare results from **Random Forest** and **VADER**
+- Web UI built with **FastAPI**, rendered via `index.html`
+- Lightweight frontend with `style.css`
+
+---
+
+## ✅ Status
+
+✔️ All models and assets are already uploaded to the repo — no external downloads needed.
+
+---
+
+## 📄 License
+
+MIT License
+
+---
+
+## 🙏 Acknowledgements
+
+- [HuggingFace Transformers](https://huggingface.co/)
+- [FastAPI](https://fastapi.tiangolo.com/)
+- [scikit-learn](https://scikit-learn.org/)
+- [NLTK](https://www.nltk.org/)
