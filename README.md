@@ -8,6 +8,20 @@ This project is a full-stack **Sentiment Analysis** app using:
 - ⚡ FastAPI backend
 - 🌐 HTML/CSS frontend
 
+## 📊 Model Training (`model.ipynb`)
+
+The `model.ipynb` notebook trains a Random Forest classifier using combined features from:
+
+- **VADER** sentiment scores  
+- **RoBERTa** sentiment probabilities  
+- Text-based features: `text_len`, `num_words`, `has_exclam`, `has_question`, etc.
+
+The resulting model achieved:
+
+- **F1 Score**: `0.75`  
+- **Accuracy**: `75%`  
+
+
 ---
 
 ## 📁 Project Structure
