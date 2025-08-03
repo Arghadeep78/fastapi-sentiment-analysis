@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sentiment Analyzer</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div style="text-align:center; margin-bottom: 15px;">
+      <img src="https://img.icons8.com/fluency/96/combo-chart.png" width="80" style="border-radius: 50%;" />
+    </div>
+
+    <h1>Sentiment Analyzer</h1>
+
+    <div id="sentiment-form">
+      <textarea id="text-input" placeholder="Enter tweet or sentence..." required></textarea>
+      <button id="analyze-btn" type="submit">Analyze</button>
+    </div>
+
+    <div id="results" class="hidden">
+      <h2>Prediction Result</h2>
+      <p><strong>Predicted Sentiment:</strong> <span id="predicted-sentiment"></span></p>
+
+      <div class="score-section">
+        <div class="score-box">
+          <h3>RoBERTa Scores</h3>
+          <ul>
+            <li>Positive: <span id="roberta-pos"></span></li>
+            <li>Neutral: <span id="roberta-neu"></span></li>
+            <li>Negative: <span id="roberta-neg"></span></li>
+          </ul>
+        </div>
+
+        <div class="score-box">
+          <h3>VADER Scores</h3>
+          <ul>
+            <li>Positive: <span id="vader-pos"></span></li>
+            <li>Neutral: <span id="vader-neu"></span></li>
+            <li>Negative: <span id="vader-neg"></span></li>
+            <li>Compound: <span id="vader-compound"></span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Chart Containers -->
+      <div class="chart-container">
+        <canvas id="robertaChart"></canvas>
+      </div>
+
+      <div class="chart-container">
+        <canvas id="vaderChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Built by Arghadeep Ghosh
+  </footer>
+
+  <script>
+    const analyzeBtn = document.getElementById('analyze-btn');
+    const resultDiv = document.getElementById('results');
+
+    let robertaChart, vaderChart;
+
+    function renderCharts(data) {
+      if (robertaChart) robertaChart.destroy();
+      if (vaderChart) vaderChart.destroy();
+
+      const ctxRoberta = document.getElementById('robertaChart').getContext('2d');
+      robertaChart = new Chart(ctxRoberta, {
+        type: 'bar',
+        data: {
+          labels: ['Positive', 'Neutral', 'Negative'],
+          datasets: [{
+            label: 'RoBERTa Sentiment Scores',
+            data: [
+              data.roberta.roberta_pos,
+              data.roberta.roberta_neu,
+              data.roberta.roberta_neg
+            ],
+            backgroundColor: ['#28a745', '#ffc107', '#dc3545']
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 1
+            }
+          }
+        }
+      });
+
+      const ctxVader = document.getElementById('vaderChart').getContext('2d');
+      vaderChart = new Chart(ctxVader, {
+        type: 'bar',
+        data: {
+          labels: ['Positive', 'Neutral', 'Negative', 'Compound'],
+          datasets: [{
+            label: 'VADER Sentiment Scores',
+            data: [
+              data.vader.pos,
+              data.vader.neu,
+              data.vader.neg,
+              data.vader.compound
+            ],
+            backgroundColor: ['#28a745', '#ffc107', '#dc3545', '#17a2b8']
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 1
+            }
+          }
+        }
+      });
+    }
+
+    analyzeBtn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      const text = document.getElementById('text-input').value;
+
+      const res = await fetch("/predict", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ text })
+      });
+
+      const data = await res.json();
+
+      document.getElementById("predicted-sentiment").textContent = data.predicted_sentiment.toUpperCase();
+      document.getElementById("roberta-pos").textContent = data.roberta.roberta_pos.toFixed(3);
+      document.getElementById("roberta-neu").textContent = data.roberta.roberta_neu.toFixed(3);
+      document.getElementById("roberta-neg").textContent = data.roberta.roberta_neg.toFixed(3);
+      document.getElementById("vader-pos").textContent = data.vader.pos.toFixed(3);
+      document.getElementById("vader-neu").textContent = data.vader.neu.toFixed(3);
+      document.getElementById("vader-neg").textContent = data.vader.neg.toFixed(3);
+      document.getElementById("vader-compound").textContent = data.vader.compound.toFixed(3);
+
+      renderCharts(data);
+      resultDiv.classList.remove("hidden");
+    });
+  </script>
+</body>
+</html>
