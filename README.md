@@ -110,3 +110,14 @@ MIT License
 - [FastAPI](https://fastapi.tiangolo.com/)
 - [scikit-learn](https://scikit-learn.org/)
 - [NLTK](https://www.nltk.org/)
+
+- 
+## 📬 Contact
+
+Created by **[Arghadeep Ghosh]**  
+🔗 [LinkedIn](https://www.linkedin.com/in/arghadeep-ghosh-895b27287/)  
+📫 [Email](arghadeepghosh17@gmail.com)
+
+---
+
+> ⭐ Star this repo if you like the project or find it helpful!
