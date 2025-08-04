@@ -37,7 +37,9 @@ The resulting model achieved:
 │   └── style.css                # CSS for frontend
 ├── templates/
 │   └── index.html               # HTML template rendered by FastAPI
-├── screenshots                  # Screenshots of FastAPI app
+├── screenshots/                 # Screenshots of FastAPI app
+│   └── screenshot_01.jpeg
+│   └── screenshot_02.jpeg
 ├── train.csv                    # Sample training data
 ├── model.ipynb                  # Jupyter Notebook for model training
 ├── app.py                       # Main FastAPI app
